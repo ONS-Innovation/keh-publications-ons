@@ -1,0 +1,8 @@
+.DS_Store
+terraform/*/.terraform
+terraform/*/.terraform.lock.hcl
+terraform/*/.terraform.lock.hcl
+
+*.tfvars
+/terraform
+/app/src/components/ui
