@@ -40,6 +40,13 @@ Start the development server:
 make dev
 ```
 
+## Linting
+
+Run the linter (also used in [GitHub Action](.github/workflows/linter.yml)):
+
+```bash
+make lint
+```
 
 ## Terraform
 
