@@ -15,6 +15,24 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60,
   },
+  // Handle reverse proxy headers
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'x-powered-by',
+            value: 'Next.js',
+          },
+        ],
+      },
+    ];
+  },
+  // Trust the proxy headers
+  httpAgentOptions: {
+    keepAlive: true,
+  },
 };
 
 export default nextConfig;
