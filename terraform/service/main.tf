@@ -15,7 +15,6 @@ resource "aws_cloudwatch_log_group" "frontend_logs" {
   name              = "/ecs/ecs-service-${var.service_subdomain}-frontend"
   retention_in_days = var.log_retention_days
 }
-
 resource "aws_ecs_task_definition" "ecs_service_definition" {
   family = "ecs-service-${var.service_subdomain}-application"
   container_definitions = jsonencode([
@@ -55,7 +54,7 @@ resource "aws_ecs_task_definition" "ecs_service_definition" {
         },
         {
           name  = "PORT",
-          value = "${var.container_port}"
+          value = tostring(var.container_port)
         },
         {
           name  = "HOSTNAME",
