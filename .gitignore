@@ -4,6 +4,5 @@ terraform/*/.terraform.lock.hcl
 terraform/*/.terraform.lock.hcl
 
 *.tfvars
-/app/src/components/ui
 terraform/service/highest_alb_listener_priority.txt
 terraform/service/highest_priority.txt
