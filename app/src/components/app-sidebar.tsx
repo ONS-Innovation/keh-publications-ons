@@ -13,7 +13,6 @@ import {
 
 import { NavDash } from "./nav-dash";
 import { NavSecondary } from "./nav-secondary";
-import { NavUser } from "./nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -125,15 +124,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </Link>
           </SidebarGroup>
           <NavDash items={data.navDashItems} />
-          <SidebarGroup className="mt-auto">
+          <SidebarGroup>
             <SidebarMenuButton onClick={() => setIsHelpOpen(true)}>
               <LifeBuoy /> Help
             </SidebarMenuButton>
           </SidebarGroup>
         </SidebarContent>
-        <SidebarFooter>
-          <NavUser user={data.user} />
-        </SidebarFooter>
       </Sidebar>
 
       <Sheet open={isHelpOpen} onOpenChange={setIsHelpOpen} >
