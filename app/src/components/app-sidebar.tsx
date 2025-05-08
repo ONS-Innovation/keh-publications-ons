@@ -20,6 +20,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { ThemeToggle } from "@/components/theme-toggle"
 import Link from "next/link";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
@@ -93,7 +94,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
   return (
     <>
-      <Sidebar variant="inset" {...props}>
+      <Sidebar variant="floating" {...props}>
         <SidebarHeader>
           <SidebarMenu>
             <SidebarMenuItem>
@@ -124,6 +125,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton onClick={() => setIsHelpOpen(true)}>
               <LifeBuoy /> Help
             </SidebarMenuButton>
+            <ThemeToggle />
           </SidebarGroup>
         </SidebarContent>
       </Sidebar>

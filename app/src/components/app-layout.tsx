@@ -3,7 +3,6 @@
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "@/components/ui/sidebar"
 import { Separator } from "@/components/ui/separator"
 import { AppSidebar } from "@/components/app-sidebar"
-import { ThemeToggle } from "@/components/theme-toggle"
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -57,7 +56,6 @@ export function AppLayout({ children }: AppLayoutProps) {
             <BreadcrumbList>{breadcrumbItems}</BreadcrumbList>
           </Breadcrumb>
           <div className="flex-1" />
-          <ThemeToggle />
         </header>
         <main className="flex-1 box-border p-6 h-full w-full overflow-auto">
           {children}
