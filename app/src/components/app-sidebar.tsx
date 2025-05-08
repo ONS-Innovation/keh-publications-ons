@@ -4,7 +4,6 @@ import type * as React from "react";
 import { useState } from "react";
 import {
   LifeBuoy,
-  ChartNoAxesColumn,
   BarChart,
   Network,
   SearchCheck,
@@ -12,11 +11,9 @@ import {
 } from "lucide-react";
 
 import { NavDash } from "./nav-dash";
-import { NavSecondary } from "./nav-secondary";
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarHeader,
   SidebarMenu,
@@ -24,8 +21,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
 
 const data = {
