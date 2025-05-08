@@ -1,20 +1,24 @@
-"use client"
+"use client";
 
-import { AppLayout } from "@/components/app-layout"
-import { DataTable, createSortableColumn } from "@/components/dashboard/explore/table"
-import { fetchPublicationData } from "@/utils/getData"
-import { ColumnDef } from "@tanstack/react-table"
-import { useState, useEffect } from "react"
+import { AppLayout } from "@/components/app-layout";
+import {
+  DataTable,
+  createSortableColumn,
+} from "@/components/dashboard/explore/table";
+import { fetchPublicationData } from "@/utils/getData";
+import { ColumnDef } from "@tanstack/react-table";
+import { useState, useEffect } from "react";
+import Loading from "@/components/loading";
 
 interface PublicationData {
-  "Publication Title": string
-  "Directorate": string
-  "Division": string
-  "DD": string
-  "BA Lead": string
-  "Frequency": string
-  "Output type": string
-  "PO2 alignment (FY25/26)": string
+  "Publication Title": string;
+  Directorate: string;
+  Division: string;
+  DD: string;
+  "BA Lead": string;
+  Frequency: string;
+  "Output type": string;
+  "PO2 alignment (FY25/26)": string;
 }
 
 const columns: ColumnDef<PublicationData>[] = [
@@ -25,8 +29,8 @@ const columns: ColumnDef<PublicationData>[] = [
   createSortableColumn("BA Lead", "BA Lead"),
   createSortableColumn("Frequency", "Frequency"),
   createSortableColumn("Output type", "Output type"),
-  createSortableColumn("PO2 alignment (FY25/26)", "PO2 alignment")
-]
+  createSortableColumn("PO2 alignment (FY25/26)", "PO2 alignment"),
+];
 
 export default function ExplorePage() {
   const [data, setData] = useState<PublicationData[]>([]);
@@ -43,26 +47,24 @@ export default function ExplorePage() {
         setIsLoading(false);
       }
     }
-    
+
     fetchData();
   }, []);
-  
+
   return (
     <AppLayout>
-        <div className="rounded-xl bg-card">
-          {isLoading ? (
-            <div className="flex justify-center items-center h-64">
-              <p>Loading data...</p>
-            </div>
-          ) : (
-            <DataTable 
-              columns={columns} 
-              data={data} 
-              filterColumn="Publication Title"
-              filterPlaceholder="Search publications..."
-            />
-          )}
-        </div>
+      <div className="rounded-xl bg-card">
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <DataTable
+            columns={columns}
+            data={data}
+            filterColumn="Publication Title"
+            filterPlaceholder="Search publications..."
+          />
+        )}
+      </div>
     </AppLayout>
-  )
+  );
 }

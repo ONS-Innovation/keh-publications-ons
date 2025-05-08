@@ -8,3 +8,4 @@ terraform/service/highest_alb_listener_priority.txt
 terraform/service/highest_priority.txt
 node_modules/
 app/public/data.csv
+/mock

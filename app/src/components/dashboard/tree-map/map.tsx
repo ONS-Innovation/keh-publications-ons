@@ -59,6 +59,7 @@ export function TreeMap({
   const [position, setPosition] = React.useState({ x: 0, y: 0 });
   const [scale, setScale] = React.useState(1);
 
+
   // Handle mouse down for dragging
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -101,10 +102,6 @@ export function TreeMap({
 
   return (
     <Card className={cn("h-full", className)}>
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        {description && <CardDescription>{description}</CardDescription>}
-      </CardHeader>
       <CardContent className="pb-0 h-full relative overflow-hidden">
         <div
           className="absolute top-0 left-0 right-0 bottom-0 overflow-auto"
@@ -125,7 +122,11 @@ export function TreeMap({
           >
             <div className="flex justify-center w-full">
               <div className="flex flex-row space-x-12 relative -mt-3">
-                {data.map((parentNode, parentIndex) => {
+                {[...data].sort((a, b) => 
+                  a.name === 'Other' ? 1 : 
+                  b.name === 'Other' ? -1 : 
+                  a.name.localeCompare(b.name)
+                ).map((parentNode, parentIndex) => {
                   const parentColor =
                     chartColors[parentIndex % chartColors.length];
 
