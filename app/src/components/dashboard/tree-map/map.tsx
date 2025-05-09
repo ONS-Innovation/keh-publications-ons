@@ -25,8 +25,6 @@ interface TreeMapNode {
 
 interface TreeMapProps {
   data: TreeMapNode[];
-  title: string;
-  description?: string;
   footerText?: string;
   className?: string;
 }
@@ -45,8 +43,6 @@ const chartColors = [
 
 export function TreeMap({
   data,
-  title,
-  description,
   footerText,
   className,
 }: TreeMapProps) {
@@ -287,9 +283,6 @@ export function TreeMap({
               </div>
             ))}
           <div className="flex justify-end gap-2 items-center mt-4">
-            {/* <Button variant="outline" size="sm" className="w-full">
-              View details (TBA)
-            </Button> */}
             <Button variant="secondary" size="sm" onClick={() => setSelectedNode(null)}>
               Close
             </Button>

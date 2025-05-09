@@ -6,8 +6,9 @@ import {
   LifeBuoy,
   BarChart,
   Network,
-  SearchCheck,
   Home,
+  CalendarDays,
+  Table,
 } from "lucide-react";
 
 import { NavDash } from "./nav-dash";
@@ -50,10 +51,10 @@ const data = {
       icon: Network,
     },
     {
-      name: "Explore",
-      url: "/dashboard/explore",
-      icon: SearchCheck,
-    },
+      name: "Timeline",
+      url: "/dashboard/timeline",
+      icon: CalendarDays,
+    }
   ],
 };
 

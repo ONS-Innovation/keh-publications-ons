@@ -9,7 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-
+import { usePathname } from "next/navigation"
 export function NavDash({
   items,
 }: {
@@ -20,13 +20,15 @@ export function NavDash({
   }[]
 }) {
 
+  const pathname = usePathname()
+
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-      <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
+      <SidebarGroupLabel>PO2 Alignments</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <SidebarMenuItem key={item.name}>
-            <SidebarMenuButton asChild>
+          <SidebarMenuItem key={item.name}> 
+            <SidebarMenuButton asChild isActive={pathname === item.url}>
               <a href={item.url}>
                 <item.icon />
                 <span>{item.name}</span>

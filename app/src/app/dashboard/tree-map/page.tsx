@@ -196,8 +196,6 @@ export default function TreeMapPage() {
           </div>
           <TreeMap
             data={filteredTreeMapData}
-            title=""
-            description=""
             className="h-[100%] shadow-none border-none"
           />
         </div>

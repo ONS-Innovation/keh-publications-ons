@@ -12,7 +12,6 @@ export default function HomePage() {
               <CardTitle>Dashboard <Badge variant="destructive" className="ml-2">Authorised Only</Badge></CardTitle> 
               <CardDescription>View detailed analytics and insights about publications.</CardDescription>
             </CardHeader>
-
           </Card>
         </Link>
       </div>

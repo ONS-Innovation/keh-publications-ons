@@ -11,6 +11,12 @@ import { PublicationTimeline } from "@/components/dashboard/statistics/publicati
 import Loading from "@/components/loading";
 import { SummaryCard } from "@/components/dashboard/statistics/summary-card";
 import { Button } from "@/components/ui/button";
+import {
+  DataTable,
+  createSortableColumn,
+} from "@/components/dashboard/explore/table";
+import { ColumnDef } from "@tanstack/react-table";
+import { Separator } from "@/components/ui/separator";
 
 interface PublicationData {
   "Publication Title": string;
@@ -22,6 +28,18 @@ interface PublicationData {
   "Output type": string;
   "PO2 alignment (FY25/26)": string;
 }
+
+// Table columns configuration
+const columns: ColumnDef<PublicationData>[] = [
+  createSortableColumn("Publication Title", "Title"),
+  createSortableColumn("Directorate", "Directorate"),
+  createSortableColumn("Division", "Division"),
+  createSortableColumn("DD", "DD"),
+  createSortableColumn("BA Lead", "BA Lead"),
+  createSortableColumn("Frequency", "Frequency"),
+  createSortableColumn("Output type", "Output type"),
+  createSortableColumn("PO2 alignment (FY25/26)", "PO2 alignment"),
+];
 
 // Chart colors
 const chartColors = [
@@ -38,7 +56,9 @@ const chartColors = [
 export default function StatisticsPage() {
   const [data, setData] = React.useState<PublicationData[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [selectedAlignments, setSelectedAlignments] = React.useState<string[]>([]);
+  const [selectedAlignments, setSelectedAlignments] = React.useState<string[]>(
+    []
+  );
 
   React.useEffect(() => {
     async function fetchData() {
@@ -58,8 +78,8 @@ export default function StatisticsPage() {
   // Filter data based on selected alignments
   const filteredData = React.useMemo(() => {
     if (!selectedAlignments.length) return data;
-    
-    return data.filter(item => 
+
+    return data.filter((item) =>
       selectedAlignments.includes(item["PO2 alignment (FY25/26)"] || "Unknown")
     );
   }, [data, selectedAlignments]);
@@ -79,7 +99,7 @@ export default function StatisticsPage() {
       value: count,
       fill: `hsl(${chartColors[index % chartColors.length]})`,
     }));
-  }, [filteredData, chartColors]);
+  }, [filteredData]);
 
   const filteredDirectorateData = React.useMemo(() => {
     if (!filteredData.length) return [];
@@ -87,7 +107,8 @@ export default function StatisticsPage() {
     const directorateCounts: Record<string, number> = {};
     filteredData.forEach((item) => {
       const directorate = item.Directorate || "Unknown";
-      directorateCounts[directorate] = (directorateCounts[directorate] || 0) + 1;
+      directorateCounts[directorate] =
+        (directorateCounts[directorate] || 0) + 1;
     });
 
     return Object.entries(directorateCounts).map(
@@ -97,7 +118,7 @@ export default function StatisticsPage() {
         fill: `hsl(${chartColors[index % chartColors.length]})`,
       })
     );
-  }, [filteredData, chartColors]);
+  }, [filteredData]);
 
   const filteredOutputTypeData = React.useMemo(() => {
     if (!filteredData.length) return [];
@@ -115,7 +136,7 @@ export default function StatisticsPage() {
         fill: `hsl(${chartColors[index % chartColors.length]})`,
       })
     );
-  }, [filteredData, chartColors]);
+  }, [filteredData]);
 
   // Process data for PO2 alignment chart
   const alignmentData = React.useMemo(() => {
@@ -172,7 +193,9 @@ export default function StatisticsPage() {
 
   // Extract unique output types for the stacked bar chart
   const filteredUniqueOutputTypes = React.useMemo(() => {
-    return [...new Set(filteredData.map((item) => item["Output type"] || "Unknown"))];
+    return [
+      ...new Set(filteredData.map((item) => item["Output type"] || "Unknown")),
+    ];
   }, [filteredData]);
 
   // Process data for heatmap (Frequency vs Output Type)
@@ -253,20 +276,23 @@ export default function StatisticsPage() {
   const alignmentSummaryData = React.useMemo(() => {
     if (!data.length) return [];
 
-    const alignmentMap: Record<string, { count: number, divisions: Set<string> }> = {};
-    
+    const alignmentMap: Record<
+      string,
+      { count: number; divisions: Set<string> }
+    > = {};
+
     data.forEach((item) => {
       const alignment = item["PO2 alignment (FY25/26)"] || "Unknown";
       const division = item.Division || "Unknown Division";
-      
+
       if (!alignmentMap[alignment]) {
         alignmentMap[alignment] = { count: 0, divisions: new Set() };
       }
-      
+
       alignmentMap[alignment].count++;
       alignmentMap[alignment].divisions.add(division);
     });
-    
+
     return Object.entries(alignmentMap).map(([alignment, info], index) => ({
       name: alignment,
       publicationCount: info.count,
@@ -282,10 +308,10 @@ export default function StatisticsPage() {
   const alignmentConfig = createChartConfig(alignmentData);
 
   const handleCardClick = (alignment: string) => {
-    setSelectedAlignments(prev => {
+    setSelectedAlignments((prev) => {
       if (prev.includes(alignment)) {
         // If already selected, deselect it
-        return prev.filter(a => a !== alignment);
+        return prev.filter((a) => a !== alignment);
       } else {
         // Otherwise, add it to selection
         return [...prev, alignment];
@@ -305,17 +331,28 @@ export default function StatisticsPage() {
         <div className="space-y-6">
           <div className="flex flex-col gap-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold">PO2 Alignments</h2>
-              <Button 
-                variant={selectedAlignments.length === 0 ? "default" : "outline"} 
+              <div className="flex flex-col">
+                <h2 className="text-2xl font-bold">PO2 Alignments</h2>
+                <p className="text-sm text-muted-foreground">
+                  Click on one or more PO2 alignment cards to view its data.
+                </p>
+              </div>
+              <Button
+                variant={
+                  selectedAlignments.length === 0 ? "default" : "outline"
+                }
                 onClick={showAllAlignments}
                 className="ml-auto"
               >
                 Show All
               </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {alignmentSummaryData.map((item) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* Places other at the end */}
+              {[
+                ...alignmentSummaryData.filter((item) => item.name !== "Other"),
+                ...alignmentSummaryData.filter((item) => item.name === "Other"),
+              ].map((item) => (
                 <SummaryCard
                   key={item.name}
                   title={item.name}
@@ -360,6 +397,43 @@ export default function StatisticsPage() {
             </div>
           </div>
 
+          <Separator className="my-4" />
+
+          {/* Data table section */}
+          <div className="rounded-xl bg-card">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-xl font-bold">Publications Data</h2>
+                <p className="text-sm text-muted-foreground">
+                  {selectedAlignments.length > 0
+                    ? `Showing ${filteredData.length} publications for selected PO2 alignment${
+                        selectedAlignments.length > 1 ? "s" : ""
+                      }`
+                    : `Showing all ${data.length} publications`}
+                </p>
+              </div>
+            </div>
+            <DataTable
+              columns={columns}
+              data={filteredData}
+              filterColumn="Publication Title"
+              filterPlaceholder="Search publications..."
+            />
+          </div>
+
+          <Separator className="my-4" />
+
+          <div>
+                <h2 className="text-xl font-bold">Graphs and Charts</h2>
+                <p className="text-sm text-muted-foreground">
+                  {selectedAlignments.length > 0
+                    ? `Showing ${filteredData.length} publications for selected PO2 alignment${
+                        selectedAlignments.length > 1 ? "s" : ""
+                      }`
+                    : `Showing all ${data.length} publications`}
+                </p>
+              </div>
+
           <div className="grid gap-6 grid-cols-1">
             <StackedBarChart
               title="Output Types by Frequency"
@@ -380,13 +454,16 @@ export default function StatisticsPage() {
                 ),
               ]}
               yLabels={[
-                ...new Set(filteredData.map((item) => item["Frequency"] || "Unknown")),
+                ...new Set(
+                  filteredData.map((item) => item["Frequency"] || "Unknown")
+                ),
               ]}
               xAxisTitle="Output Type"
               yAxisTitle="Frequency"
               footerText="Darker cells indicate higher concentration of publications"
             />
           </div>
+          
           <div className="grid gap-6 grid-cols-1">
             <PublicationTimeline
               title="Monthly Publication Distribution"

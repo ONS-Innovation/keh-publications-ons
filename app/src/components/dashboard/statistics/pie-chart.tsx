@@ -5,6 +5,8 @@ import { Label, Pie, PieChart as RechartsPieChart } from "recharts"
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
@@ -43,9 +45,9 @@ export function StatisticsPieChart({
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={config}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto w-[400px] h-[300px] flex flex-col"
         >
-          <RechartsPieChart>
+          <RechartsPieChart className="h-[200px]">
             <ChartTooltip
               cursor={true}
               content={<ChartTooltipContent hideLabel />}
@@ -87,14 +89,18 @@ export function StatisticsPieChart({
                 }}
               />
             </Pie>
+            <ChartLegend
+              content={<ChartLegendContent nameKey="name"/>}
+              className="mt-auto h-[100px] flex-wrap gap-2 [&>*]:basis-1/6 [&>*]:justify-center pb-4"
+            />
           </RechartsPieChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col gap-2 text-sm">
+      {/* <CardFooter className="flex-col gap-2 text-sm">
         <div className="leading-none text-muted-foreground">
           {footerText}
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   )
 } 
