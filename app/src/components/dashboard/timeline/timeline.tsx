@@ -263,7 +263,7 @@ export function VerticalTimeline({ publications, chartColors }: TimelineProps) {
     };
   } | null>(null);
 
-  const [viewMode, setViewMode] = React.useState<ViewMode>("day");
+  const [viewMode, setViewMode] = React.useState<ViewMode>("month");
   
   // State to track sort order - default is descending (newest first)
   const [sortAscending, setSortAscending] = React.useState(false);
