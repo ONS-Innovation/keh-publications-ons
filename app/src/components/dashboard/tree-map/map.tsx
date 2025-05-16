@@ -96,17 +96,44 @@ export function TreeMap({
     setSelectedNode(node);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    switch (e.key) {
+      case "ArrowUp":
+        e.preventDefault();
+        setPosition(({ x, y }) => ({ x, y: y + 10 }));
+        break;
+      case "ArrowDown":
+        e.preventDefault();
+        setPosition(({ x, y }) => ({ x, y: y - 10 }));
+        break;
+      case "ArrowLeft":
+        e.preventDefault();
+        setPosition(({ x, y }) => ({ x: x + 10, y }));
+        break;
+      case "ArrowRight":
+        e.preventDefault();
+        setPosition(({ x, y }) => ({ x: x - 10, y }));
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <Card className={cn("h-full", className)}>
       <CardContent className="pb-0 h-full relative overflow-hidden">
         <div
-          className="absolute top-0 left-0 right-0 bottom-0 overflow-auto"
+          className="absolute top-0 left-0 right-0 bottom-0 overflow-auto focus:outline-none focus-visible:ring focus-visible:ring-primary"
+          ref={containerRef}
+          tabIndex={0}
+          role="region"
+          aria-label="Tree map pan and zoom container"
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseLeave}
           onWheel={handleWheel}
-          ref={containerRef}
+          onKeyDown={handleKeyDown}
         >
           <div
             className="relative min-w-full min-h-full"
@@ -239,7 +266,10 @@ export function TreeMap({
 
       {selectedNode && (
         <div
-          className="p-4 mt-2 bg-card rounded-md mx-4 max-h-50 w-[400px] overflow-y-auto absolute cursor-move shadow-md border border-border"
+          className="p-4 mt-2 bg-card rounded-md mx-4 max-h-50 w-[400px] overflow-y-auto absolute cursor-move shadow-md border border-border focus:outline-none"
+          tabIndex={0}
+          role="region"
+          aria-label="Selected node details"
           style={{
             position: "absolute",
             bottom: "20px",

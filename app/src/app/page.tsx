@@ -9,7 +9,7 @@ export default function HomePage() {
         <Link href="/dashboard/statistics">
           <Card className="flex flex-col h-full hover:shadow-md transition-shadow">
             <CardHeader>
-              <CardTitle>Dashboard <Badge variant="destructive" className="ml-2">Authorised Only</Badge></CardTitle> 
+              <CardTitle>Dashboard <Badge className="ml-2">Authorised Only</Badge></CardTitle> 
               <CardDescription>View detailed analytics and insights about publications.</CardDescription>
             </CardHeader>
           </Card>

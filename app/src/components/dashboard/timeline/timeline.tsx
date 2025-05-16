@@ -742,7 +742,12 @@ export function VerticalTimeline({ publications, chartColors }: TimelineProps) {
         </div>
 
         {/* Timeline scrollable container */}
-        <div className="overflow-y-auto flex-grow pb-8">
+        <div
+          className="overflow-y-auto flex-grow pb-8 focus:outline-none"
+          tabIndex={0}
+          role="region"
+          aria-label="Timeline"
+        >
           {/* Timeline points */}
           <div className="space-y-8">
             {groupedTimelinePoints.map((group) => (
@@ -801,7 +806,12 @@ export function VerticalTimeline({ publications, chartColors }: TimelineProps) {
       <div className="w-2/5 border-l pl-4 flex flex-col">
         <div className="flex flex-col h-full overflow-hidden">
           {/* Info panel content */}
-          <Card className="flex-grow overflow-y-auto">
+          <Card
+            className="flex-grow overflow-y-auto focus:outline-none"
+            tabIndex={0}
+            role="region"
+            aria-label="Publication details"
+          >
             {activePoint ? (
               <div className="flex flex-col h-full">
                 <PublicationDetail

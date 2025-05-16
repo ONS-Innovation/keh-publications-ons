@@ -9,3 +9,6 @@ terraform/service/highest_priority.txt
 node_modules/
 app/public/data.csv
 /mock
+
+
+/testing/reports

@@ -149,7 +149,17 @@ export function DataTable<TData, TValue>({
                 table.getRowModel().rows.map((row) => (
                   <TableRow key={row.id}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id} className="text-nowrap max-w-[200px] overflow-x-auto no-scrollbar">
+                      <TableCell
+                        key={cell.id}
+                        tabIndex={0}
+                        role="group"
+                        aria-label="Scrollable cell content"
+                        className="text-nowrap max-w-[200px] overflow-x-auto focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                        onKeyDown={(e) => {
+                          if (e.key === 'ArrowRight') e.currentTarget.scrollBy({ left: 50, behavior: 'smooth' })
+                          if (e.key === 'ArrowLeft') e.currentTarget.scrollBy({ left: -50, behavior: 'smooth' })
+                        }}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

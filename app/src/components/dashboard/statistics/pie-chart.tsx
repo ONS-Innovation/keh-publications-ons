@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Label, Pie, PieChart as RechartsPieChart } from "recharts"
+import { Label, Pie, PieChart as RechartsPieChart, Cell } from "recharts"
 import {
   ChartConfig,
   ChartContainer,
@@ -47,7 +47,13 @@ export function StatisticsPieChart({
           config={config}
           className="mx-auto w-[400px] h-[300px] flex flex-col"
         >
-          <RechartsPieChart className="h-[200px]">
+          <RechartsPieChart
+            className="h-[200px]"
+            role="img"
+            aria-label={title}
+          >
+            <title>{title}</title>
+            <desc>{description}</desc>
             <ChartTooltip
               cursor={true}
               content={<ChartTooltipContent hideLabel />}
@@ -88,19 +94,23 @@ export function StatisticsPieChart({
                   }
                 }}
               />
+              {data.map(({ name, value, fill }) => (
+                <Cell
+                  key={name}
+                  fill={fill}
+                  role="img"
+                  aria-label={`${name}: ${value}`}
+                  tabIndex={-1}
+                />
+              ))}
             </Pie>
             <ChartLegend
-              content={<ChartLegendContent nameKey="name"/>}
+              content={<ChartLegendContent nameKey="name" />}
               className="mt-auto h-[100px] flex-wrap gap-2 [&>*]:basis-1/6 [&>*]:justify-center pb-4"
             />
           </RechartsPieChart>
         </ChartContainer>
       </CardContent>
-      {/* <CardFooter className="flex-col gap-2 text-sm">
-        <div className="leading-none text-muted-foreground">
-          {footerText}
-        </div>
-      </CardFooter> */}
     </Card>
   )
-} 
+}
