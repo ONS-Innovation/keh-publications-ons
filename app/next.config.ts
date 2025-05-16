@@ -4,9 +4,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: false,
   output: "standalone",
   // Improve performance for serverless environments
-  experimental: {
-    serverComponentsExternalPackages: ["sharp"],
-  },
+  serverExternalPackages: ["sharp"],
   // Handle asset prefixes for ECS/ALB environment
   poweredByHeader: false,
   // Optimize image handling

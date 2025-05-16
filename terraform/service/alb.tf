@@ -43,7 +43,6 @@ module "alb_listener_priority" {
   listener_arn          = data.terraform_remote_state.ecs_infrastructure.outputs.application_lb_https_listener_arn
 }
 
-
 # Review frontend paths - restricted to authorised user pool only (first priority)
 resource "aws_lb_listener_rule" "publications_frontend_rule" {
   listener_arn = data.terraform_remote_state.ecs_infrastructure.outputs.application_lb_https_listener_arn
@@ -57,7 +56,7 @@ resource "aws_lb_listener_rule" "publications_frontend_rule" {
 
   condition {
     path_pattern {
-      values = ["/dashboard"]
+      values = ["/dashboard", "/dashboard/*", "/api/dashboard/*"]
     }
   }
 
