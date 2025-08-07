@@ -1,9 +1,11 @@
-# KEH - ONS Publications PoC
+> Archived following successful proof of concept validation.
 
-# Getting Started
+# Publications Proof of Concept
 
 ## Prerequisites
-### Node.js
+
+- Node.js
+
 This project requires Node.js version 20.18.0. To install Node.js:
 
 1. Visit [Node.js official website](https://nodejs.org/)
